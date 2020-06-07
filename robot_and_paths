@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define mod 1000000007
+ll dp[1005][1005]={0};
+ll m,n,p;
+void make_dp(){
+    
+    for(ll k=0;k<m;k++){
+        if(dp[k][0]==-1){
+            break;
+        }
+        dp[k][0]=1;
+    }
+    for(ll k=0;k<n;k++){
+        if(dp[0][k]==-1){
+            break;
+        }
+        dp[0][k]=1;
+    }
+    for(ll i=1;i<m;i++){
+        for(ll j=1;j<n;j++){
+            if(dp[i][j]==-1){
+                continue;
+            }
+            dp[i][j]=0;
+            if(dp[i][j-1]!=-1){
+                dp[i][j]=(dp[i][j-1]%mod);
+            }
+            if(dp[i-1][j]!=-1)
+            dp[i][j]=(dp[i][j]+dp[i-1][j])%mod;
+        }
+    }
+}
+int main(){
+    cin>>m>>n>>p;
+    ll x,y;
+    //ll grid[1005][1005]={0};
+    for(ll i=0;i<p;i++){
+        cin>>x>>y;
+        dp[x-1][y-1]=-1;
+    }
+    make_dp();
+    if(dp[m-1][n-1]==-1){
+        cout<<0<<endl;
+    }
+    else{
+    cout<<dp[m-1][n-1]<<endl;
+    }
+    return 0;
+}
