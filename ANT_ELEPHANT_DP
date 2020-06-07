@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namepspace std;
+int n,m;
+int ant[100][100]={0};
+int ele[100][100]={0};
+void make_ant_dp(int *grid[],int i,int j){
+  if(i==0 && j==0)
+  ant[i][j]=grid[i][j];
+  
+  else if (i==0 && j!=0){
+  for(int k=1;k<m;k++)
+  ant[i][k]=1;
+  
+ }
+ 
+ else if(i!=0 && j==0){
+ for(int k=1;k<n;k++){
+ ant[k][j]=1;
+ }
+ 
+ else{
+  ant[i][j]=ant[i][j-1]+ant[i-1][j];
+  }
+
+
+}
+void make_elephant(int *grid[],int i,int j){
+if(i==0 && j==0)
+  ele[i][j]=grid[i][j];
+  
+  else if (i==0 && j!=0){
+  for(int k=1;k<m;k++)
+  ele[i][k]=ele[i][k-1]+grid[i][j];
+  
+  
+ }
+ 
+ else if(i!=0 && j==0){
+ for(int k=1;k<n;k++){
+ ele[k][j]=ele[k-1][j]+grid[i][j];
+ }
+}
+
+else{
+int a=0;
+for(int k=0;k<i;k++){
+a+=ele[k][j];}
+for(int k=0;k<j;k++){
+a+=ele[i][k];}
+ele[i][j]=a;
+}
+}
+int main(){
+  cin>>n>>m;
+  int grid[n][m];
+  for(int i=0;i<n;i++){
+  for(int j=0;j<m;j++){
+  cin>>grid[i][j];
+  }
+  }
+  make_ant_dp(grid,0,0);
+  make_elephant(grid,0,0);
+
+return 0;
+}
