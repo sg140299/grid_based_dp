@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+int dp[100][100]={0};
+int n,m;
+//ONLY DOWN AND RIGHT TURNS ARE ALLOWED
+void make_dp(int arr[],int i,int j){
+  if(i==0 && j==0){
+    dp[i][j]=arr[i][j];
+  }
+  else if(i==0 && j!=0){
+    for(int k=1;k<m;k++){
+    dp[i][k]=dp[i][k-1]+arr[i][k];
+    }
+  
+  }
+  else if(i!=0 && j==0){
+  for(int k=1;k<n;k++){
+  dp[k][j]=dp[k-1][j]+arr[k][j];
+  }
+}
+else{
+dp[i][j]=min(dp[i][j-1],dp[i-1][j])+arr[i][j];
+}
+}
+int main(){
+  
+  cin>>n>>m;
+  int arr[n][m]={0};
+  for(int i=0;i<n;i++){
+  for(int j=0;j<m;j++){
+  cin>>arr[i][j];
+  }
+  }
+  make_dp(arr,0,0);
+  return 0;
+}
